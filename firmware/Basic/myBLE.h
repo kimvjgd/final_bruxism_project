@@ -87,7 +87,7 @@ void initBLE()
 {
     char data[256];
     // String str = "WEARABLE" + String(WEARABLE_DEVICE_NUM);
-    String str = "Dongdong";
+    String str = "Bruxism_Device";
     str.toCharArray(data, str.length() + 1);
 
     BLEDevice::init(data);

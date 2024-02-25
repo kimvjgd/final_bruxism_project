@@ -17,9 +17,10 @@ MUX_SEL == 1
 
 ================================== For E.S. Apply ==================================
 나중에 연구실 가서 다시 알아보자
-HIGH_DURATION = ? us
-LOW_DURATION = ? us
-TOTAL_DURATION = ? us
+HIGH_DURATION = 220 us
+LOW_DURATION = 220 us
+SMALL_PERIOD_DURATION = 30 ms
+TOTAL_PERIOD_DURATION = SMALL_PERIOD_DURATION * 15
 
 
 
