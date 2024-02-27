@@ -1,0 +1,24 @@
+//////////////////////////////////////////////////////////// STEP UP REGULATOR ////////////////////////////////////////////////////////////
+ TL499ACP - 스텝업레귤레이터, 3V배터리로 9V/DC를 만드실려면 이칩을 선택해주세요. https://www.devicemart.co.kr/goods/view?no=1058662
+
+//////////////////////////////////////////////////////////// MOSFET ////////////////////////////////////////////////////////////
+// P //
+CJ2301S - P-Channel 20-V(D-S) MOSFET, SOT-23 타입 - https://www.devicemart.co.kr/goods/view?no=1327075
+AO3401A - Trans MOSFET P-CH 30V 4A, SOT-23 - https://www.devicemart.co.kr/goods/view?no=1279215
+
+// N //
+CJ2302S - N-Channel 20-V(D-S) MOSFET, SOT-23 타입 - https://www.devicemart.co.kr/goods/view?no=1327073
+FDN335N - N-Channel 2.5V Specified PowerTrenchTM MOSFET, N채널 20V, 1.7A, 0.07Ohm, SSOT-3 - https://www.devicemart.co.kr/goods/view?no=24208
+
+
+//////////////////////////////////////////////////////////// SW ////////////////////////////////////////////////////////////
+TC4S66F - 디지털 스위치입니다. 디지털혹은 아날로그신호을 스위칭 할수 있습니다. - https://www.devicemart.co.kr/goods/view?no=1058773
+SN74LVC1G66DBVR - TEXAS INSTRUMENTS - SN74LVC1G66DBVR - IC, ANA SWITCH, SINGLE, SMD - https://www.devicemart.co.kr/goods/view?no=15162269
+
+//////////////////////////////////////////////////////////// BJT ////////////////////////////////////////////////////////////
+// NPN //
+S8050 - 25V 300mW 500mA NPN SOT-23 Bipolar Transistors - BJT ROHS - https://www.devicemart.co.kr/goods/view?no=15230133
+
+// PNP //
+SS8050 - 25V 300mW 200@100mA,1V 1.5A NPN SOT-23 Bipolar Transistors - BJT ROHS - https://www.devicemart.co.kr/goods/view?no=15070933
+
