@@ -22,3 +22,5 @@ S8050 - 25V 300mW 500mA NPN SOT-23 Bipolar Transistors - BJT ROHS - https://www.
 // PNP //
 SS8050 - 25V 300mW 200@100mA,1V 1.5A NPN SOT-23 Bipolar Transistors - BJT ROHS - https://www.devicemart.co.kr/goods/view?no=15070933
 
+//////////////////////////////////////////////////////////// STEPUP Regulator ////////////////////////////////////////////////////////////
+LM2704MF-ADJ - DC/DC Converter, Micropower Step-up(Boost), 550mA Peak Current Limit, 5Pin, SOT23-5 - https://www.devicemart.co.kr/goods/view?no=1057703
