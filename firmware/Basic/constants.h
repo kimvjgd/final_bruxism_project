@@ -45,10 +45,7 @@ void INIT_SETTING() {
 }
 
 // MUX_SEL == 1 -> B MUX Connect -> EMG MODE 
-bool SET_EMG_MODE() {
-    digitalWrite(MUX_SEL, 1);
-    return true;
-}
+ 
 
 // MUX_SEL == 0 -> A MUX Connect -> E.S. MODE 
 bool SET_ELEC_STIMUL_MODE(){
