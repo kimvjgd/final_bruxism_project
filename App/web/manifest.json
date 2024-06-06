@@ -1,6 +1,6 @@
 {
-    "name": "app_bruxism",
-    "short_name": "app_bruxism",
+    "name": "app",
+    "short_name": "app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
