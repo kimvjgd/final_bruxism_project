@@ -57,9 +57,6 @@ void SEND_INA_INFO() {
 }
 
 
-
-
-
 void INIT_SETTING() {
     Serial.begin(115200);
     UART_INIT_SETTING();

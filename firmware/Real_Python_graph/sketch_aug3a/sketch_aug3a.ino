@@ -3,15 +3,17 @@ int value_CURRENT = 0;
 int value_VOLTAGE = 0;
 int value_POWER = 0;
 
+#define ANALOG_READ_PIN   34
+
 void setup() {
   // put your setup code here, to run once:
-  pinMode(A0, INPUT);
+  pinMode(ANALOG_READ_PIN, INPUT);
   Serial.begin(115200);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  value_EMG = analogRead(A0);
+  value_EMG = analogRead(ANALOG_READ_PIN);
   if(value_CURRENT > 20) {
     value_CURRENT = 1;
   }

@@ -15,7 +15,7 @@ import queue
 Debug_Mode = False
 
 # Variables
-ylim_EMG = 1023
+ylim_EMG = 4096
 ylim_Voltage = 8
 ylim_Current = 30
 ylim_Power = 100
@@ -83,7 +83,7 @@ class SerialPlotter:
         self.show_warning()
 
     def show_warning(self):
-        messagebox.showwarning("Warning", "This is a warning message!")
+        messagebox.showwarning("Dong Caution", "Push only Stop Button to record data")
 
     def plot_init(self):
         self.fig, self.axs = plt.subplots(4, 1, figsize=(8, 12), sharex=True)  # 4개의 서브플롯 생성
@@ -105,7 +105,9 @@ class SerialPlotter:
             ax.set_ylabel(label)
             self.lines.append(line)
 
-        self.axs[0].set_ylim(0, ylim_EMG)  # EMG 값의 y축 범위 설정
+        # self.axs[0].set_ylim(0, ylim_EMG)  # EMG 값의 y축 범위 설정
+        self.axs[0].set_ylim(1750, 2250)  # EMG 값의 y축 범위 설정
+        
         self.axs[1].set_ylim(0, ylim_Voltage)     # Voltage 값의 y축 범위 설정
         self.axs[2].set_ylim(0, ylim_Current)    # Current 값의 y축 범위 설정
         self.axs[3].set_ylim(0, ylim_Power)   # Power 값의 y축 범위 설정
