@@ -22,7 +22,7 @@
 ////////////////// Changeable Values //////////////////
 uint8_t CUR_CNT = 0;
 byte    PULSE_PERIOD_CNT = 15;              // 나중에 연구실 가서 데이터 보고 pulse count를 세자.... 지금은 잘 기억이 안난다.
-byte    PULSE_
+// byte    PULSE_
 // true - EMG, false - E.S.
 bool CURRENT_MODE = true;
 ////////////////////////////////////////
@@ -40,15 +40,12 @@ void INIT_SETTING() {
     pinMode(LO_MINUS, INPUT);
     
 
-    digitalWrite(MUX_SEL, 0);
+    digitalWrite(MUX_SEL, 1);
     digitalWrite(MUX_S1A, 0);
 }
 
 // MUX_SEL == 1 -> B MUX Connect -> EMG MODE 
-bool SET_EMG_MODE() {
-    digitalWrite(MUX_SEL, 1);
-    return true;
-}
+ 
 
 // MUX_SEL == 0 -> A MUX Connect -> E.S. MODE 
 bool SET_ELEC_STIMUL_MODE(){

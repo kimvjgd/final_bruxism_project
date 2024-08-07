@@ -1,4 +1,4 @@
-package com.dongpakka.app_bruxism
+package com.dongpakka.app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-# app_bruxism
+# app
 
 A new Flutter project.
 

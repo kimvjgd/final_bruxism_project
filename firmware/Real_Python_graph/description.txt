@@ -1,0 +1,111 @@
+###### Version Function Description ######
+
+# ver 1
++ UART Communication
++ Live Plot
+
+
+# ver 2
+UART Communication
+Live Plot
++ Excel Save
+
+
+# ver 3
+UART Communication
+Live Plot
+Excel Save
++ Get Multiple Data Simultaneously
+
+
+# ver 4
+UART Communication
+Live Plot
+Excel Save
+Get Multiple Data Simultaneously
++ tkinter GUI (Selecting Baud Rate / Available Port)
+
+
+# ver 5
+UART Communication
+Live Plot
+Excel Save
+Get Multiple Data Simultaneously
+tkinter GUI (Selecting Baud Rate / Available Port)
+
+
+# ver 6
+UART Communication
+Live Plot
+Excel Save
+Get Multiple Data Simultaneously
+tkinter GUI (Selecting Baud Rate / Available Port)
++ Separating 4 graph for each
+
+
+# ver 7
+UART Communication
+Live Plot
+Excel Save
+Get Multiple Data Simultaneously
+tkinter GUI (Selecting Baud Rate / Available Port)
+Separating 4 graph for each
++ Delay Error Fixed
+
+
+# ver 8
+UART Communication
+Live Plot
+Excel Save
+Get Multiple Data Simultaneously
+tkinter GUI (Selecting Baud Rate / Available Port)
+Separating 4 graph for each
+Delay Error Fixed
++ Reactive Screen Size
++ Excel Download Error Fixed
++ Start -> Stop -> Start => Data Initialization
+
+
+# ver 9
+UART Communication
+Live Plot
+Excel Save
+Get Multiple Data Simultaneously
+tkinter GUI (Selecting Baud Rate / Available Port)
+Separating 4 graph for each
+Delay Error Fixed
+Reactive Screen Size
+Excel Download Error Fixed
+Start -> Stop -> Start => Data Initialization
++ ylim for EMG, Voltage, Current, Power
+
+
+# ver 10
+UART Communication
+Live Plot
+Excel Save
+Get Multiple Data Simultaneously
+tkinter GUI (Selecting Baud Rate / Available Port)
+Separating 4 graph for each
+Delay Error Fixed
+Reactive Screen Size
+Excel Download Error Fixed
+Start -> Stop -> Start => Data Initialization
+ylim for EMG, Voltage, Current, Power
++ Current value on Screen
+
+
+# ver 11
+UART Communication
+Live Plot
+Excel Save
+Get Multiple Data Simultaneously
+tkinter GUI (Selecting Baud Rate / Available Port)
+Separating 4 graph for each
+Delay Error Fixed
+Reactive Screen Size
+Excel Download Error Fixed
+Start -> Stop -> Start => Data Initialization
+ylim for EMG, Voltage, Current, Power
+Current value on Screen
++ Start Window 추가
