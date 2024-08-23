@@ -1,7 +1,7 @@
 ################## Part 1 ###################
 ############## Integrated_Main ##############
-1. STM32L412            ---         (Main MCU)
-2. ESP32-PICO-D4        ---         (Sub MCU)
+1. STM32L412            ---         (Main MCU - Low Power)
+2. ESP32-PICO-D4        ---         (Sub MCU - BLE)
 3. AD8232               ---         (EMG Module)
 4. TMUX                 ---         (Anal. MUX)
 5. DRV8871              ---         (H-Bridge)
@@ -18,4 +18,7 @@
 ############## Integrated_Sub ##############
 1. INA219               ---         (Power, Current, Volatge Monitor)
 2. LiPo 3.7V            ---         (Battery)
-3. 
+3. B3U                  ---         (Button)
+4. ESP32 (Model undec.) ---         (MCU)
+5. C-type Connector     ---         ()
+6. CP2102??     ---         (USB-Serial Driver)
