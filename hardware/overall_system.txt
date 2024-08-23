@@ -1,0 +1,21 @@
+################## Part 1 ###################
+############## Integrated_Main ##############
+1. STM32L412            ---         (Main MCU)
+2. ESP32-PICO-D4        ---         (Sub MCU)
+3. AD8232               ---         (EMG Module)
+4. TMUX                 ---         (Anal. MUX)
+5. DRV8871              ---         (H-Bridge)
+6. TPS61046             ---         (Booster)
+7. Not-Decided          ---         (FRAM)
+8. Not-Decided          ---         (N-MOSFET)
+9. Not-Decided          ---         (3 Regulator)
+
+0. C-type Connector
+0. LiPo Battery
+
+
+################## Part 2 ##################
+############## Integrated_Sub ##############
+1. INA219               ---         (Power, Current, Volatge Monitor)
+2. LiPo 3.7V            ---         (Battery)
+3. 
