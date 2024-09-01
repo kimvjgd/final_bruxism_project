@@ -16,13 +16,13 @@ Debug_Mode = False
 
 # Variables
 ylim_EMG = 4096
-<<<<<<< HEAD
+# <<<<<<< HEAD
 ylim_Voltage = 5
 ylim_Current = 7
-=======
+# =======
 ylim_Voltage = 8
 ylim_Current = 30
->>>>>>> f82846cd1311c60bdbfd88a09c0d45dfd2e7b0ab
+# >>>>>>> f82846cd1311c60bdbfd88a09c0d45dfd2e7b0ab
 ylim_Power = 100
 
 ylim_EMG = ylim_EMG * 1.1
