@@ -5,20 +5,21 @@
 #include "soc/wdev_reg.h"
 #include "xtensa/core-macros.h"
 
-#include "constants.h"
+
+#include "functions_bruxism.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void UART_task(void *pvParameter)
-{
-  (void)pvParameter;
+// void UART_task(void *pvParameter)
+// {
+//   (void)pvParameter;
 
-  while (1)
-  {
-      TRANSFER_UART_DATA();
-      vTaskDelay(10 / portTICK_RATE_MS);       // 혹시 에러가 나면 여기를 if 문 밖으로 뺴보자
-  }
-}
+//   while (1)
+//   {
+//       // TRANSFER_UART_DATA();
+//       vTaskDelay(10 / portTICK_RATE_MS);       // 혹시 에러가 나면 여기를 if 문 밖으로 뺴보자
+//   }
+// }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +30,31 @@ void INA_task(void *pvParameter)
   while (1)
   {
     SEND_INA_INFO();
-    vTaskDelay(2000 / portTICK_RATE_MS);
+    vTaskDelay(100 / portTICK_RATE_MS);
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void BLE_task(void *pvParameter) 
+{
+  (void)pvParameter;
+  
+  // BLE 초기화
+  NimBLEDevice::init("");
+
+  // BLE 서버에 연결 시도
+  connectToServer();
+
+  while (1)
+  {
+    if(isConnected) {
+
+    } else {
+      Serial.println("Not connected, retrying connection...");
+      connectToServer();
+    }
+    vTaskDelay(100 / portTICK_RATE_MS);
   }
 }
 
@@ -37,8 +62,11 @@ void INA_task(void *pvParameter)
 
 void freeRTOS_setup()
 {
-  xTaskCreatePinnedToCore(&UART_task, "UART_Task", 8192, NULL, 1, NULL, 0);
+  INIT_SETTING();
+  // xTaskCreatePinnedToCore(&UART_task, "UART_Task", 8192, NULL, 1, NULL, 0);
   xTaskCreatePinnedToCore(&INA_task, "INA_Task", 8192, NULL, 2, NULL, 1); 
+  xTaskCreatePinnedToCore(&BLE_task, "BLE_Task", 8192, NULL, 2, NULL, 1); 
+
 }
 
 
