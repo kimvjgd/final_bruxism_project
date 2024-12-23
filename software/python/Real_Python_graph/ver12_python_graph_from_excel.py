@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the new Excel file
-file_path = 'sample.xlsx'
+file_path = '2024-10-25_12-22-33.xlsx'
 data = pd.read_excel(file_path)
 
 # Generate a synthetic 'Time' column with 19 data points per second

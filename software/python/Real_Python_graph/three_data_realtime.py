@@ -15,8 +15,7 @@ import queue
 Debug_Mode = False
 
 # Variables
-# ylim_Sensor = 4096 * 1.1  # 센서 값의 y축 범위
-ylim_Sensor = 3 * 1.1  # 센서 값의 y축 범위
+ylim_Sensors = [(1500, 2400 * 1.1), (0, 150 * 1.1), (1500, 2400 * 1.1)]  # 센서별 y축 범위 설정
 
 class SerialPlotter:
     def __init__(self, master):
@@ -60,9 +59,13 @@ class SerialPlotter:
         self.update_plot()
 
         # 값을 표시할 레이블 추가
-        label_font = ("Arial", 16)  # 글자 크기를 16으로 설정
-        self.sensor_label = tk.Label(master, text="Sensor Value: N/A", font=label_font)
-        self.sensor_label.grid(row=4, column=0, columnspan=2, sticky="w")
+        label_font = ("Arial", 16)
+        self.sensor_labels = [
+            tk.Label(master, text=f"Sensor {i+1} Value: N/A", font=label_font)
+            for i in range(3)
+        ]
+        for i, label in enumerate(self.sensor_labels):
+            label.grid(row=4 + i, column=0, columnspan=2, sticky="w")
 
         # 경고 메시지 박스 추가
         self.show_warning()
@@ -71,17 +74,21 @@ class SerialPlotter:
         messagebox.showwarning("Caution", "Push only Stop Button to record data")
 
     def plot_init(self):
-        self.fig, self.ax = plt.subplots(figsize=(8, 6))  # 단일 플롯 생성
+        self.fig, self.axs = plt.subplots(3, 1, figsize=(8, 12), sharex=True)
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.plot_frame)
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
-        self.xdata = deque(maxlen=100)  # x축 데이터를 최대 100개까지 유지
-        self.ydata_sensor = deque(maxlen=100)  # 센서 데이터를 최대 100개까지 유지
+        self.xdata = deque(maxlen=100)
+        self.ydata_sensors = [deque(maxlen=100) for _ in range(3)]
 
-        self.line, = self.ax.plot([], [], 'r-', label='Sensor Value')
-        self.ax.set_ylabel('Sensor Value')
-        self.ax.set_ylim(0, ylim_Sensor)  # 센서 값의 y축 범위 설정
-        self.ax.set_xlabel("Time (s)")
+        self.lines = []
+        for i, ax in enumerate(self.axs):
+            line, = ax.plot([], [], label=f"Sensor {i+1} Value")
+            ax.set_ylabel(f"Sensor {i+1} Value")
+            ax.set_ylim(ylim_Sensors[i])
+            ax.legend()
+            self.lines.append(line)
+        self.axs[-1].set_xlabel("Time (s)")
 
     def start_plotting(self):
         port = self.port_combobox.get()
@@ -90,11 +97,16 @@ class SerialPlotter:
         if not port or not baudrate:
             return
 
-        # 데이터 초기화
         self.xdata.clear()
-        self.ydata_sensor.clear()
+        for ydata in self.ydata_sensors:
+            ydata.clear()
 
-        self.ser = serial.Serial(port, baudrate, timeout=0.1)
+        try:
+            self.ser = serial.Serial(port, baudrate, timeout=0.1)
+        except serial.SerialException as e:
+            messagebox.showerror("Serial Error", f"Failed to open serial port: {e}")
+            return
+
         self.running = True
         self.start_time = time.time()
         self.serial_thread = threading.Thread(target=self.read_serial)
@@ -104,13 +116,13 @@ class SerialPlotter:
 
     def stop_plotting(self):
         self.running = False
-        if self.serial_thread.is_alive():
+        if self.serial_thread and self.serial_thread.is_alive():
             self.serial_thread.join()
-        self.ser.close()
+        if hasattr(self, 'ser') and self.ser.is_open:
+            self.ser.close()
         self.start_button.config(state=tk.NORMAL, bg="green", fg="white")
         self.stop_button.config(state=tk.DISABLED, bg=self.master.cget("bg"))
 
-        # 데이터 큐 초기화
         with self.data_queue.mutex:
             self.data_queue.queue.clear()
 
@@ -118,50 +130,52 @@ class SerialPlotter:
         data = []
         try:
             while self.running:
-                sensor_value_str = self.ser.readline().decode('utf-8').strip()
-                if sensor_value_str:
+                try:
+                    line = self.ser.readline()
                     try:
-                        sensor_value = float(sensor_value_str)
-                        elapsed_time = time.time() - self.start_time  # 시작 시간부터 경과 시간 계산
-                        if Debug_Mode:
-                            print(f"Sensor Value: {sensor_value}")
+                        decoded_line = line.decode('utf-8').strip()
+                    except UnicodeDecodeError:
+                        decoded_line = line.decode('latin-1').strip()
+                    if decoded_line:
+                        try:
+                            values = [float(v) for v in decoded_line.split(',')]
+                            if len(values) == 3:
+                                elapsed_time = time.time() - self.start_time
+                                if Debug_Mode:
+                                    print(f"Sensor Values: {values}")
 
-                        # 큐에 데이터를 넣어 메인 스레드에서 처리하도록 함
-                        self.data_queue.put((elapsed_time, sensor_value))
-                        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # 현재 시간을 년도-월-일 시:분:초 형식으로 가져옴
-
-                        # 데이터 저장
-                        data.append((current_time, sensor_value))
-
-                    except ValueError:
-                        print(f"잘못된 데이터 포맷입니다: {sensor_value_str}")
-
-                # 10ms 대기
+                                self.data_queue.put((elapsed_time, values))
+                                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                                data.append((current_time, *values))
+                        except ValueError:
+                            print(f"Invalid data format: {decoded_line}")
+                except serial.SerialException as e:
+                    print(f"Serial read error: {e}")
+                    break
                 time.sleep(0.01)
-        except serial.SerialException:
-            print("Serial connection error.")
+        except Exception as e:
+            print(f"Unexpected error: {e}")
         finally:
-            # 데이터를 pandas DataFrame으로 변환
-            df = pd.DataFrame(data, columns=['Time', 'Sensor Value'])
-            # 엑셀 파일로 저장
+            df = pd.DataFrame(data, columns=['Time', 'Sensor 1', 'Sensor 2', 'Sensor 3'])
             safe_time_str = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
             df.to_excel(f'{safe_time_str}.xlsx', index=False)
-            print(f"데이터를 {safe_time_str}.xlsx 파일로 저장했습니다.")
+            print(f"Data saved to {safe_time_str}.xlsx")
 
     def update_plot(self):
         while not self.data_queue.empty():
-            new_x, new_y_sensor = self.data_queue.get()
+            new_x, new_y_sensors = self.data_queue.get()
             self.xdata.append(new_x)
-            self.ydata_sensor.append(new_y_sensor)
+            for i, ydata in enumerate(self.ydata_sensors):
+                ydata.append(new_y_sensors[i])
 
-            # 레이블 업데이트
-            self.sensor_label.config(text=f"Sensor Value: {new_y_sensor} V")
+            for i, label in enumerate(self.sensor_labels):
+                label.config(text=f"Sensor {i+1} Value: {new_y_sensors[i]} V")
 
-        self.line.set_xdata(self.xdata)
-        self.line.set_ydata(self.ydata_sensor)
-
-        self.ax.relim()  # 축 범위 업데이트
-        self.ax.autoscale_view()  # 축 범위 자동으로 설정
+        for i, (line, ax) in enumerate(zip(self.lines, self.axs)):
+            line.set_xdata(self.xdata)
+            line.set_ydata(self.ydata_sensors[i])
+            ax.relim()
+            ax.autoscale_view()
 
         self.canvas.draw()
         self.canvas.flush_events()
@@ -174,7 +188,7 @@ def find_serial_ports():
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.geometry("800x600")  # 윈도우 크기 설정
+    root.geometry("800x600")
     root.grid_rowconfigure(0, weight=1)
     root.grid_columnconfigure(0, weight=1)
     plotter = SerialPlotter(root)

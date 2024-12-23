@@ -26,7 +26,8 @@
 void INA_task(void *pvParameter) 
 {
   (void)pvParameter;
-
+  ina219.begin();
+  INA_INIT_SETTING();
   while (1)
   {
     SEND_INA_INFO();
